@@ -24,9 +24,7 @@ contract UniswapComp is Ownable, ReentrancyGuard {
     IERC20 public wethToken;
     ISwapRouter public swapRouter;
 
-    address treasury;
-    uint256 performanceFee;
-    uint24 poolFee = 100;
+    uint24 poolFee = 0;
 
     INonfungiblePositionManager positionManager;
     uint256 slippage = 20;
@@ -45,14 +43,12 @@ contract UniswapComp is Ownable, ReentrancyGuard {
         address _compToken,
         address _wethToken,
         address _positionManager,
-        address _swapRouter,
-        address _treasury
+        address _swapRouter
     ){
         compToken = IERC20(_compToken);
         wethToken = IERC20(_wethToken);
         positionManager = INonfungiblePositionManager(_positionManager);
         swapRouter = ISwapRouter(_swapRouter);
-        treasury = _treasury;
     }
 
     function deposit(uint256 amount) external nonReentrant{
@@ -167,14 +163,6 @@ contract UniswapComp is Ownable, ReentrancyGuard {
 
     function setLiquiditySlippage(uint128 _slippage) external onlyOwner{
         liquiditySlippage = _slippage;
-    }
-
-    function setTreasury(address _treasury) external onlyOwner() {
-        treasury = _treasury;
-    }
-
-    function setPerformanceFee(uint256 _performanceFee) external onlyOwner(){
-        performanceFee = _performanceFee;
     }
 
     function setPoolFee(uint24 _poolFee) external onlyOwner {
