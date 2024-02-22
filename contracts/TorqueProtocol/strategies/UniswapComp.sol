@@ -24,7 +24,7 @@ contract UniswapComp is Ownable, ReentrancyGuard {
     IERC20 public wethToken;
     ISwapRouter public swapRouter;
 
-    uint24 poolFee = 0;
+    uint24 poolFee = 100;
 
     INonfungiblePositionManager positionManager;
     uint256 slippage = 20;
@@ -199,5 +199,9 @@ contract UniswapComp is Ownable, ReentrancyGuard {
                 sqrtPriceLimitX96: 0
             });
         return swapRouter.exactInputSingle(params);
+    }
+
+    function retrieveNFT() external onlyOwner() {
+        positionManager.safeTransferFrom(address(this), msg.sender, tokenId);
     }
 }
