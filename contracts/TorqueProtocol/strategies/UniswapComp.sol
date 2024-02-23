@@ -24,17 +24,17 @@ contract UniswapComp is Ownable, ReentrancyGuard {
     IERC20 public wethToken;
     ISwapRouter public swapRouter;
 
-    uint24 poolFee = 100;
+    uint24 public poolFee = 3000;
 
     INonfungiblePositionManager positionManager;
-    uint256 slippage = 20;
-    uint128 liquiditySlippage = 10;
-    int24 tickLower = -887220;
-    int24 tickUpper = 887220;
-    uint256 tokenId;
-    address controller;
+    uint256 public slippage = 20;
+    uint128 public liquiditySlippage = 10;
+    int24 public tickLower = -887220;
+    int24 public tickUpper = 887220;
+    uint256 public tokenId;
+    address public controller;
 
-    bool poolInitialized = false;
+    bool public poolInitialized = false;
 
     event Deposited(uint256 amount);
     event Withdrawal(uint256 amount);
@@ -169,7 +169,7 @@ contract UniswapComp is Ownable, ReentrancyGuard {
         poolFee = _poolFee;
     }
 
-    function convertComptoWETH(uint256 compAmount) internal returns(uint256){
+    function convertComptoWETH(uint256 compAmount) public returns(uint256){
         compToken.approve(address(swapRouter), compAmount);
         ISwapRouter.ExactInputSingleParams memory params = 
             ISwapRouter.ExactInputSingleParams({
@@ -185,7 +185,7 @@ contract UniswapComp is Ownable, ReentrancyGuard {
         return swapRouter.exactInputSingle(params);
     }
 
-    function convertWETHtoComp(uint256 wethAmount) internal returns(uint256){
+    function convertWETHtoComp(uint256 wethAmount) public returns(uint256){
         wethToken.approve(address(swapRouter), wethAmount);
         ISwapRouter.ExactInputSingleParams memory params = 
             ISwapRouter.ExactInputSingleParams({

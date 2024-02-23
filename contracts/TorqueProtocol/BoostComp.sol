@@ -42,8 +42,8 @@ contract BoostComp is AutomationCompatible, Ownable, ReentrancyGuard, ERC20{
         string memory _name,
         string memory _symbol,
         address _compAddress,
-        address _uniswapCompAddress,
-        address _sushiCompAddress,
+        address payable _uniswapCompAddress,
+        address payable _sushiCompAddress,
         address _treasury
     ) ERC20(_name, _symbol) {
         compToken = IERC20(_compAddress);
