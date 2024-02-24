@@ -169,7 +169,7 @@ contract UniswapComp is Ownable, ReentrancyGuard {
         poolFee = _poolFee;
     }
 
-    function convertComptoWETH(uint256 compAmount) public returns(uint256){
+    function convertComptoWETH(uint256 compAmount) internal returns(uint256){
         compToken.approve(address(swapRouter), compAmount);
         ISwapRouter.ExactInputSingleParams memory params = 
             ISwapRouter.ExactInputSingleParams({
@@ -185,7 +185,7 @@ contract UniswapComp is Ownable, ReentrancyGuard {
         return swapRouter.exactInputSingle(params);
     }
 
-    function convertWETHtoComp(uint256 wethAmount) public returns(uint256){
+    function convertWETHtoComp(uint256 wethAmount) internal returns(uint256){
         wethToken.approve(address(swapRouter), wethAmount);
         ISwapRouter.ExactInputSingleParams memory params = 
             ISwapRouter.ExactInputSingleParams({
